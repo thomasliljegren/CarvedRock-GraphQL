@@ -8,6 +8,7 @@ namespace CarvedRock.Entities
     {
         Gloves,
         Boots,
+        Bouldering,
         Helmet,
         Jacket, 
         Gear,

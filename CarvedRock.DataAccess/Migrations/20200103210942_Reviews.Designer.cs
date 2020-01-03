@@ -4,14 +4,16 @@ using CarvedRock.DataAccess.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarvedRock.DataAccess.Migrations
 {
     [DbContext(typeof(CarvedRockContext))]
-    partial class CarvedRockContextModelSnapshot : ModelSnapshot
+    [Migration("20200103210942_Reviews")]
+    partial class Reviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
