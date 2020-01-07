@@ -29,5 +29,32 @@ namespace CarvedRock.DataAccess.Repositories
                 .OrderBy(t => t.Id)
                 .ToListAsync();
         }
+
+
+        public async Task<ILookup<int, ProductReview>> GetByProductIdsAsync(IEnumerable<int> productIds)
+        {
+            var reviews = await FindByCondition(t => productIds.Contains(t.ProductId)).ToListAsync();
+            return reviews.ToLookup(t => t.ProductId);
+        }
+        public new async Task<ProductReview> Create(ProductReview review)
+        {
+            base.Create(review);
+            await SaveAsync();
+            return review;
+        }
+
+        public new async Task<ProductReview> Delete(ProductReview review)
+        {
+            base.Delete(review);
+            await SaveAsync();
+            return review;
+        }
+
+        public new async Task<ProductReview> Update(ProductReview review)
+        {
+            base.Update(review);
+            await SaveAsync();
+            return review;
+        }
     }
 }

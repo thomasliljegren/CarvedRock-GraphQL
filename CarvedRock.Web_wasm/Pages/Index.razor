@@ -1,0 +1,29 @@
+﻿@page "/"
+
+@inject IProductGraphClient _client
+
+<h1>CarvedRock Webshop</h1>
+
+These products might be of interest to you.
+<br />
+<RadzenButton Text="Hello"/>
+
+<RadzenDataList WrapItems="true" AllowPaging="true" Data="@products" TItem="ProductModel">
+    <Template Context="product">
+        <RadzenCard Style="width: 300px;">
+            <div class="product-title">@product.Name</div>
+        </RadzenCard>
+    </Template>
+</RadzenDataList>
+
+@code {
+    private IEnumerable<ProductModel> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("Before getting products");
+        products = await _client.GetProducts();
+        Console.WriteLine(products);
+        Console.WriteLine("Wrote Products");
+    }
+}

@@ -1,16 +1,15 @@
-﻿using CarvedRock.DataAccess.Repositories;
+﻿using CarvedRock.Api.GraphQL.Types;
+using CarvedRock.DataAccess.Repositories;
 using CarvedRock.Entities;
+using GraphQL.DataLoader;
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace CarvedRock.GraphQL.Types
 {
     public class ProductGraphType : ObjectGraphType<Product>
     {
-        public ProductGraphType(IProductReviewRepository productReviewRepository)
+        public ProductGraphType(IProductReviewRepository productReviewRepository, IDataLoaderContextAccessor dataLoaderAccessor)
         {
             Field(t => t.Id);
             Field(t => t.Name).Description("Name of the product");
@@ -20,12 +19,16 @@ namespace CarvedRock.GraphQL.Types
             Field(t => t.Stock).Description("Amount in stock");
             Field(t => t.Rating).Description("Product rating (1-5)");
             Field(t => t.PhotoFileName).Description("Photo file name that lets the client request the photo");
-            Field<ProductTypeEnumGraphType>("Type", "Type of product");
+            Field<ProductTypeGraphType>("ProductType", "Type of product");
             Field<ListGraphType<ProductReviewGraphType>>(
                 "reviews",
-                resolve: context => productReviewRepository.GetByProductIdAsync(context.Source.Id)
-                );
-            
+                resolve: context =>
+                {
+                    var user = (ClaimsPrincipal)context.UserContext;
+                    var loader = dataLoaderAccessor.Context.GetOrAddCollectionBatchLoader<int, ProductReview>("GetReviewsByProductId", productReviewRepository.GetByProductIdsAsync);
+                    return loader.LoadAsync(context.Source.Id);
+                });
+
         }
     }
 }

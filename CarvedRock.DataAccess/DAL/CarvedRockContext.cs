@@ -13,6 +13,10 @@ namespace CarvedRock.DataAccess.DAL
 
         }
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //}
+
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
 

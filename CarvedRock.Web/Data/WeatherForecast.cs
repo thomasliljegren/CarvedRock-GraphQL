@@ -1,6 +1,6 @@
 using System;
 
-namespace CarvedRock
+namespace CarvedRock.Web.Data
 {
     public class WeatherForecast
     {

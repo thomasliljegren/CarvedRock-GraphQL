@@ -10,7 +10,7 @@ namespace CarvedRock.Entities
         Boots,
         Bouldering,
         Helmet,
-        Jacket, 
+        Jacket,
         Gear,
         Other
     }

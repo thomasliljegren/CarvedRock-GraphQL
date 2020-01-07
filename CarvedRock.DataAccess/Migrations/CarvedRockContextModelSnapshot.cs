@@ -29,6 +29,9 @@ namespace CarvedRock.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Discontinued")
+                        .HasColumnType("bit");
+
                     b.Property<DateTimeOffset>("IntroducedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -43,13 +46,13 @@ namespace CarvedRock.DataAccess.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
+
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

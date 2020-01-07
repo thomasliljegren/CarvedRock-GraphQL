@@ -9,7 +9,7 @@ namespace CarvedRock.DataAccess.DAL
     {
         public static void Seed(this CarvedRockContext context)
         {
-            if(!context.Products.Any())
+            if (!context.Products.Any())
             {
                 context.Products.AddRange(new List<Product>
                 {
@@ -19,23 +19,23 @@ namespace CarvedRock.DataAccess.DAL
                         Description = "Walking boots designed for mountaineering",
                         Price = 219.5m,
                         Rating = 4,
-                        Type = ProductType.Boots,
                         Stock = 12,
                         IntroducedAt = new DateTimeOffset(DateTime.Now),
-                        PhotoFileName = "shutterstock_66842440.jpg"
+                        PhotoFileName = "shutterstock_66842440.jpg",
+                        ProductType = ProductType.Boots
                     },
                     new Product
                     {
-                        Name = "Climbers Helmet",
-                        Description = "Get the protection you need with this helmet",
+                        Name = "Climbers Feet",
+                        Description = "Get the agility you need with these boot add-ons.",
                         Price = 199m,
                         Rating = 5,
-                        Type = ProductType.Helmet,
                         Stock = 5,
                         IntroducedAt = new DateTimeOffset(DateTime.Now),
-                        PhotoFileName = ""
+                        PhotoFileName = "",
+                        ProductType = ProductType.Gear
                     }
-                }); ;
+                });
                 context.SaveChanges();
             }
         }

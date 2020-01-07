@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CarvedRock.Entities
 {
@@ -12,8 +10,8 @@ namespace CarvedRock.Entities
 
         [StringLength(100)]
         public string Name { get; set; }
-        public ProductType Type { get; set; }
         public string Description { get; set; }
+        public ProductType ProductType { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
@@ -23,6 +21,8 @@ namespace CarvedRock.Entities
 
         [StringLength(100)]
         public string PhotoFileName { get; set; }
+        public bool Discontinued { get; set; }
+
 
     }
 }
