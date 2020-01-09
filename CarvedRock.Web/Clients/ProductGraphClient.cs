@@ -57,5 +57,22 @@ namespace CarvedRock.Web.Clients
             var response = await _client.PostAsync(query);
             return response.GetDataFieldAs<ProductModel>("product");
         }
+
+        public async Task<ProductReviewModel> AddReview(ProductReviewInputModel review)
+        {
+            var query = new GraphQLRequest
+            {
+                Query = @"
+                    mutation($review: reviewInput!) {
+                        createReview(review: $review) {
+                            id title review
+                        }
+                    }
+                ",
+                Variables = new { review }
+            };
+            var response = await _client.PostAsync(query);
+            return response.GetDataFieldAs<ProductReviewModel>("createReview");
+        }
     }
 }

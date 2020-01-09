@@ -1,4 +1,5 @@
-﻿using CarvedRock.Api.GraphQL.Types;
+﻿using CarvedRock.Api.GraphQL.Messaging;
+using CarvedRock.Api.GraphQL.Types;
 using CarvedRock.DataAccess.Repositories;
 using CarvedRock.Entities;
 using CarvedRock.GraphQL.Types;
@@ -12,7 +13,7 @@ namespace CarvedRock.Api.GraphQL
 {
     public class CarvedRockMutation : ObjectGraphType
     {
-        public CarvedRockMutation(IProductReviewRepository reviewRepository)
+        public CarvedRockMutation(IProductReviewRepository reviewRepository, IReviewMessageService messageService)
         {
             FieldAsync<ProductReviewGraphType>(
                 "createReview",
@@ -21,7 +22,9 @@ namespace CarvedRock.Api.GraphQL
                 resolve: async context =>
                 {
                     var review = context.GetArgument<ProductReview>("review");
-                    return await context.TryAsyncResolve(async c => await reviewRepository.Create(review));
+                    await reviewRepository.Create(review);
+                    messageService.AddReviewAddedMessage(review);
+                    return review;
                 });
         }
     }

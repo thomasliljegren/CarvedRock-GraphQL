@@ -18,10 +18,10 @@ namespace CarvedRock.Web
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _config = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _config;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -32,7 +32,7 @@ namespace CarvedRock.Web
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            IoCConfig.ConfigureServices(services);
+            IoCConfig.ConfigureServices(services, _config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

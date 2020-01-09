@@ -12,7 +12,7 @@ namespace CarvedRock.Api.GraphQL.Types
         {
             Name = "reviewInput";
             Field<NonNullGraphType<StringGraphType>>("title");
-            Field<StringGraphType>("review");
+            Field<NonNullGraphType<StringGraphType>>("review");
             Field<NonNullGraphType<IntGraphType>>("productId");
         }
         

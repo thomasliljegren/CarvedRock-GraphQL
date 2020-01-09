@@ -1,5 +1,6 @@
 ﻿using CarvedRock.Web.Clients;
 using GraphQL.Client;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace CarvedRock.Web.Configuration
     {
         private static bool _configured = false;
 
-        public static void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             if (!_configured)
             {
@@ -21,7 +22,7 @@ namespace CarvedRock.Web.Configuration
                 //var wasmHttpMessageHandlerType = Assembly.Load("WebAssembly.Net.Http").GetType("WebAssembly.Net.Http.HttpClient.WasmHttpMessageHandler");
                 //var wasmHttpMessageHandler = (HttpMessageHandler)Activator.CreateInstance(wasmHttpMessageHandlerType);
 
-                services.AddSingleton(t => new GraphQLClient("https://localhost:5001/graphql"));
+                services.AddSingleton(t => new GraphQLClient(config["CarvedRockApiUri"]));
             }
             _configured = true;
         }

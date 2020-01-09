@@ -1,4 +1,5 @@
 using CarvedRock.Api.GraphQL;
+using CarvedRock.Api.GraphQL.Messaging;
 using CarvedRock.DataAccess.DAL;
 using CarvedRock.DataAccess.Repositories;
 using CarvedRock.GraphQL;
@@ -45,15 +46,19 @@ namespace CarvedRock
             services.AddScoped<IProductReviewRepository, ProductReviewRepository>();
 
 
+
             // Links .NET service provider to GraphQL IDependencyResolver
             services.AddScoped<IDependencyResolver>(serviceProvider => new FuncDependencyResolver(serviceProvider.GetRequiredService));
 
+            // GraphQL essentials
             services.AddScoped<CarvedRockSchema>();
+            services.AddSingleton<IReviewMessageService, ReviewMessageService>();
 
             services.AddGraphQL(o => { o.ExposeExceptions = _env.IsDevelopment(); })
                 .AddGraphTypes(ServiceLifetime.Scoped)
                 .AddUserContextBuilder(context => context.User)
-                .AddDataLoader();
+                .AddDataLoader()
+                .AddWebSockets();
 
             services.AddCors();
         }
@@ -67,6 +72,8 @@ namespace CarvedRock
             //}
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseWebSockets();
+            app.UseGraphQLWebSockets<CarvedRockSchema>("/graphql");
 
             app.UseGraphQL<CarvedRockSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());

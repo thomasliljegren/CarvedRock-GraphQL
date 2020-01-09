@@ -12,6 +12,16 @@ These products might be of interest to you.
     <Template Context="product">
         <RadzenCard Style="width: 300px;">
             <div class="product-title">@product.Name</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <RadzenImage Path="https://via.placeholder.com/100x150.png?text=Photo+goes+here" />
+                </div>
+                <div class="col-md-6">
+                    <b>$@product.Price</b>
+                    <b>@product.Rating</b>
+                </div>
+            </div>
+            
         </RadzenCard>
     </Template>
 </RadzenDataList>
